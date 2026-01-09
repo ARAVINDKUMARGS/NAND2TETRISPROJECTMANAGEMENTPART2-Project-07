@@ -1,126 +1,143 @@
-# NAND2TETRISPROJECTMANAGEMENTPART2-Project-07
-PROJECT-07
-# NAND2TETRISPROJECTMANAGEMENTPART2-Project-7
-
-## Project 7 – Jack Compiler Part I
-
-**Project Code:** PROJECT07
-**Course:** Build a Modern Computer from First Principles (Nand2Tetris Part II)
-**Institution:** Hebrew University of Jerusalem
+# NAND2TETRIS – Project 7  
+## Virtual Machine I: Stack Arithmetic
 
 ---
 
-## Overview
+## Course Information
+**Course:** Build a Modern Computer from First Principles (Nand2Tetris – Part II)  
+**Institution:** Hebrew University of Jerusalem  
+**Project Code:** PROJECT-07  
 
-Project 7 implements the **first phase of the Jack Compiler**, focusing on **lexical analysis (tokenization) and parsing**. The compiler reads `.jack` source files and produces **XML parse trees**. These parse trees are used in **Project 8** to generate VM code.
+---
 
-This project lays the foundation for building a **full compiler** capable of translating Jack programs into VM code executable on the Hack platform.
+## Project Overview
+
+Project 7 implements the **first stage of a Virtual Machine (VM) Translator**.  
+The translator converts programs written in the **VM language** into **Hack assembly code**, enabling VM programs to run on the Hack computer.
+
+This project focuses on **stack-based arithmetic and memory access commands**, forming the foundation for the full VM translator completed in Project 8.
 
 ---
 
 ## Objectives
 
-* Implement a **tokenizer** to break Jack code into valid tokens.
-* Implement a **parser** to analyze syntax and generate parse trees.
-* Handle **classes, methods, variables, and statements** in the Jack language.
-* Produce XML parse trees suitable for further compilation.
+- Parse `.vm` files containing VM commands
+- Translate VM commands into equivalent Hack assembly code
+- Implement stack arithmetic and logical operations
+- Implement memory access commands (`push` and `pop`)
+- Generate correct `.asm` output compatible with the Hack CPU Emulator
+
+---
+
+## VM Commands Supported
+
+### Arithmetic / Logical Commands
+- `add`
+- `sub`
+- `neg`
+- `eq`
+- `gt`
+- `lt`
+- `and`
+- `or`
+- `not`
+
+### Memory Access Commands
+- `push segment index`
+- `pop segment index`
+
+### Supported Memory Segments
+- `constant`
+- `local`
+- `argument`
+- `this`
+- `that`
+- `temp`
+- `pointer`
+- `static`
 
 ---
 
 ## Folder Structure
 
 ```
-Project7/
+
+Project-07/
 │── README.md
 │── src/
-│   └── JackCompiler.java
-│── examples/
-│   └── Main.jack
+│   └── VMTranslator.java
+│── tests/
+│   ├── SimpleAdd.vm
+│   ├── StackTest.vm
+│   ├── BasicTest.vm
+│   ├── PointerTest.vm
+│   └── StaticTest.vm
 │── output/
-│   └── Main.xml
-│── docs/
-│   └── CompilerI_Guide.pdf
-```
+│   └── *.asm
+
+````
 
 ---
 
-## Getting Started
+## Usage
 
-### Step 1: Compile the Compiler
+### Compile the Translator
+```bash
+javac VMTranslator.java
+````
+
+### Run the Translator
 
 ```bash
-cd Project7/src
-javac JackCompiler.java
+java VMTranslator path/to/File.vm
 ```
 
-### Step 2: Run the Compiler on a Jack File
-
-```bash
-java JackCompiler ../examples/Main.jack
-```
-
-### Step 3: Check Output
-
-* The compiler generates `Main.xml` in the `output/` folder.
-* Open the XML parse tree in any XML viewer or IDE to verify correct structure.
+* Generates a `.asm` file in the same directory as the input `.vm` file
+* Output file name matches the input file name
 
 ---
 
-## Supported Features
+## Testing
 
-### Tokenization
+The translator is tested using **official Nand2Tetris test programs**:
 
-* Keywords: `class`, `method`, `function`, `constructor`, `int`, `boolean`, `char`, etc.
-* Symbols: `{ } ( ) [ ] . , ; + - * / & | < > = ~`
-* Identifiers, integer constants, string constants
+### Arithmetic Tests
 
-### Parsing
+* `SimpleAdd.vm`
+* `StackTest.vm`
 
-* Class declarations
-* Method and function definitions
-* Statements: `let`, `if`, `while`, `do`, `return`
-* Expressions and terms
+### Memory Access Tests
 
-### Example
+* `BasicTest.vm`
+* `PointerTest.vm`
+* `StaticTest.vm`
 
-**Input Jack code (`Main.jack`):**
+### Testing Procedure
 
-```jack
-class Main {
-   function void main() {
-      do Output.printString("Hello, world");
-      return;
-   }
-}
-```
-
-**Output XML (`Main.xml`):**
-
-```xml
-<class>
-  <keyword>class</keyword>
-  <identifier>Main</identifier>
-  ...
-</class>
-```
+1. Run `.vm` file using the **VM Emulator**
+2. Translate `.vm` → `.asm`
+3. Run `.asm` using the **CPU Emulator**
+4. Validate output using `.tst` and `.cmp` files
 
 ---
 
 ## Notes
 
-* This project **does not generate VM code**; it only creates parse trees.
-* Correct parse trees are essential for Project 8 (VM code generation).
-* Handles syntax errors gracefully with descriptive messages.
+* No bootstrap code is required in Project 7
+* Stack initialization and memory mapping are handled by test scripts
+* Output must contain **only translated VM commands**
+* This project is a prerequisite for **Project 8 (VM II – Program Control)**
 
 ---
 
 ## Author
 
 **Aravind Kumar GS**
-Email: `aravindkumar06062006@gmail.com`
+Email: [aravindkumar06062006@gmail.com](mailto:aravindkumar06062006@gmail.com)
 
 ---
 
 ## License
 
-Educational purposes only. Do not distribute or claim as your own work.
+
+This project is part of the Nand2Tetris course and is intended for **educational purposes only**.
